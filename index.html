@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Furor Txuna 2025</title>
+  <title>Furor Txuna</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .pulse-red {
       animation: pulse-glow-red 2s infinite;
     }
-
     @keyframes pulse-glow-red {
       0%, 100% {
         box-shadow: 0 0 0px rgba(239, 68, 68, 0.4);
@@ -20,11 +19,25 @@
         transform: scale(1.05);
       }
     }
+    /* Brilho no botão */
+    @keyframes shine {
+      0% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+      100% { transform: translateX(100%); }
+    }
+    .animate-shine {
+      animation: shine 2s infinite;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .animate-fadeIn { animation: fadeIn 0.4s ease-in-out; }
   </style>
 </head>
 <body class="relative font-sans text-white bg-black">
 
-  <!-- Fundo desfocado -->
+  <!-- Fundo -->
   <div class="fixed inset-0 bg-cover bg-center blur-sm brightness-50 z-0"
        style="background-image: url('https://i.postimg.cc/SNR4ySS2/IMG-20250805-WA0144.jpg');">
   </div>
@@ -32,7 +45,7 @@
   <!-- Conteúdo principal -->
   <div class="relative z-10 flex flex-col items-center justify-start min-h-screen pt-10 px-4">
 
-    <!-- Slide lateral puro -->
+    <!-- Slide -->
     <div class="w-full h-72 md:h-96 flex justify-center items-center overflow-hidden mb-10 relative">
       <div class="relative w-72 md:w-96 h-72 md:h-96 rounded-lg shadow-lg overflow-hidden">
         <div id="slide-current"
@@ -49,9 +62,8 @@
       A CHEGADA DO TXUNA
     </h1>
     <p class="text-xl md:text-2xl mb-10 max-w-lg text-white/90 text-center">
-      🌪️Algo está a agitar as ruas e as teorias não param de surgir. Uns dizem que é Txuna Maputo, outros apostam em Txuna Movitel.
-
- E tu❓ Vais esperar que te contem ou vais ser dos primeiros a descobrir o que é TXUNA? 🔍
+      🌪️Algo está a agitar as ruas e as teorias não param de surgir. Uns dizem que é Txuna Maputo, outros apostam em Txuna Movitel.  
+      E tu❓ Vais esperar que te contem ou vais ser dos primeiros a descobrir o que é TXUNA? 🔍
     </p>
 
     <!-- Botões principais -->
@@ -87,40 +99,55 @@
     </div>
   </div>
 
-  <!-- Script para slide lateral -->
+  <!-- MODAL URGENTE -->
+  <div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 z-50">
+    <div class="bg-gray-900/95 rounded-2xl p-8 text-center shadow-2xl max-w-md w-full border border-red-600 animate-fadeIn">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4 text-red-500">⚠️ Entre já no Grupo Oficial!</h2>
+      <p class="mb-6 text-gray-300"> Não perca tempo! Novidades  e promoções exclusivas só para membros.</p>
+      <button id="btnGrupo" 
+        class="relative w-full bg-gradient-to-r from-red-600 via-red-500 to-red-700 text-white font-extrabold py-3 rounded-xl text-lg shadow-2xl transition hover:scale-105 overflow-hidden pulse-red">
+        <span class="relative z-10"> Entrar no Grupo Agora</span>
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine"></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Script -->
   <script>
+    // Slide imagens
     const images = [
       'https://i.postimg.cc/Jh4vQKsy/IMG-20250807-WA0034-1.jpg',
       'https://i.postimg.cc/YSYRYW34/IMG-20250807-WA0033.jpg',
       'https://i.postimg.cc/G3DjfNTW/IMG-20250807-WA0037.jpg',
       'https://i.postimg.cc/SNR4ySS2/IMG-20250805-WA0144.jpg'
     ];
-
     let currentIndex = 0;
     const current = document.getElementById("slide-current");
     const next = document.getElementById("slide-next");
-
     current.style.backgroundImage = `url('${images[currentIndex]}')`;
 
     function slideImages() {
       const nextIndex = (currentIndex + 1) % images.length;
       next.style.backgroundImage = `url('${images[nextIndex]}')`;
-
       next.classList.remove("translate-x-full", "opacity-0");
       next.classList.add("translate-x-0", "opacity-100");
-
       current.classList.add("-translate-x-full", "opacity-0");
-
       setTimeout(() => {
         current.classList.remove("-translate-x-full", "opacity-0");
         next.classList.remove("translate-x-0", "opacity-100");
-
         current.style.backgroundImage = `url('${images[nextIndex]}')`;
         currentIndex = nextIndex;
       }, 1000);
     }
-
     setInterval(slideImages, 6000);
+
+    // Modal botão
+    const modal = document.getElementById("modal");
+    const btnGrupo = document.getElementById("btnGrupo");
+    btnGrupo.addEventListener("click", () => {
+      window.open("https://whapro.pro/s/Txuna", "_blank");
+      modal.style.display = "none";
+    });
   </script>
 
 </body>
